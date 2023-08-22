@@ -1,0 +1,55 @@
+# .NET MAUI
+bin/
+obj/
+.vs/
+__MACOSX/
+
+# Visual Studio for Mac
+.vscode/
+.vscode-test/
+*.userprefs
+*.suo
+
+# macOS
+.DS_Store
+
+# Rider
+.idea/
+*.sln.iml
+
+# User-specific files
+[Tt]humbs.db
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+
+# User-specific files
+*.userprefs.lock
+
+# Logs
+*.log
+
+# Build output
+[Dd]ebug/
+[Rr]elease/
+
+# Others
+*.ttf
+*.txt
+*.java
+*.png
+*.svg
+*.items
+*.log
+*.dylib
+*.a
+*.dat
+*.dll
+*.json
+*.props
+*.targets
+*.plist
+*.manifest
+*.appxmanifest
