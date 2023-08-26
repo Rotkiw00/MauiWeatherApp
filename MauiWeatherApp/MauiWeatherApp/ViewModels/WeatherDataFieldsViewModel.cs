@@ -102,6 +102,61 @@ namespace MauiWeatherApp.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private string _weatherIconUrl;
+        public string WeatherIconUrl
+        {
+            get => _weatherIconUrl;
+            set
+            {
+                _weatherIconUrl = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _humidity;
+        public string Humidity
+        {
+            get => _humidity;
+            set
+            {
+                _humidity = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _temperatureMin;
+        public string TemperatureMin
+        {
+            get => _temperatureMin;
+            set
+            {
+                _temperatureMin = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _temperatureMax;
+        public string TemperatureMax
+        {
+            get => _temperatureMax;
+            set
+            {
+                _temperatureMax = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _visibility;
+        public string Visibility
+        {
+            get => _visibility;
+            set
+            {
+                _visibility = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using MauiWeatherApp.Extensions;
+using System.Windows.Input;
 using MauiWeatherApp.DataModels;
 using MauiWeatherApp.Repositories.Services;
 
@@ -11,51 +12,121 @@ namespace MauiWeatherApp.ViewModels
 
 		public WeatherDataViewModel()
 		{
-			_service = new WeatherRestService();
-			GetWeather_Command = new Command(async () =>
-                await GetWeatherDataBySearchedCityAsync());
             SetDefaultValuesToProperties();
-		}	
 
-		private async Task GetWeatherDataBySearchedCityAsync()
-		{
-            if (!String.IsNullOrWhiteSpace(CityEntryName))
-            {
-                string query = $"{WeatherApiConnectionDetails.WEATHER_API_URI_ENDPOINT}?q={CityEntryName}&lang=pl&appid={WeatherApiConnectionDetails.WEATHER_API_KEY}&units=metric";
+			_service = new WeatherRestService();
 
-                WeatherDataModel = await _service.GetCurrentWeatherDataAsync(query);
-                InitializeWeatherDataModelProperties();
-            }
-        }       
-
-        private void InitializeWeatherDataModelProperties()
-        {
-            CityTitleName = WeatherDataModel.Title;
-            Temperature = ((int)WeatherDataModel.Main.Temperature).ToString();
-            SunriseTime = UnixTimeStampToDateTime(WeatherDataModel.Sys.Sunrise);
-            WeatherDescription = WeatherDataModel.Weather[0].Description;
-            Pressure = ((int)WeatherDataModel.Main.Pressure).ToString();
-            WindSpeed = WeatherDataModel.Wind.Speed.ToString("0.##");
-            SunsetTime = UnixTimeStampToDateTime(WeatherDataModel.Sys.Sunset);
-        }
+            GetWeather_Command = new Command(async () =>
+                await GetWeatherDataBySearchedCityAsync());
+		}
 
         private void SetDefaultValuesToProperties()
         {
             CityTitleName = " ";
             Temperature = "--";
+            TemperatureMin = "--";
+            TemperatureMax = "--";
             WeatherDescription = " ";
             SunriseTime = "--";
             Pressure = "--";
             WindSpeed = "--";
             SunsetTime = "--";
+            Humidity = "--";
+            Visibility = "--";
         }
 
-        public static string UnixTimeStampToDateTime(long unixTimeStamp)
+        private async Task GetWeatherDataBySearchedCityAsync()
+		{
+            if (!String.IsNullOrWhiteSpace(CityEntryName))
+            {
+                string query = $"{WeatherApiConnectionDetails.WEATHER_API_URI_ENDPOINT}" +
+                    $"?q={CityEntryName}" +
+                    $"&lang=en&" +
+                    $"appid={WeatherApiConnectionDetails.WEATHER_API_KEY}" +
+                    $"&units=metric";
+
+                WeatherDataModel = await _service.GetCurrentWeatherDataAsync(query);
+                if (WeatherDataModel is null)
+                {
+                    await Alerts.DisplayAlert("Cannot fetch data. Wrong city name probably");
+                }
+                else
+                {
+                    InitializeWeatherDataModelProperties();
+                }
+            }
+            else
+            {
+                ClearCityNameEntry();
+                await Alerts.DisplayAlert("Search tab is empty. Please enter the city name");
+            }
+        }        
+
+        private void InitializeWeatherDataModelProperties()
         {
-            DateTime dateTime = new(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            dateTime = dateTime.AddSeconds(unixTimeStamp).ToLocalTime();
-            return dateTime.ToString("T");
+            GetCityName();
+            GetTemperature();
+            GetSunriseAndSunsetTime();
+            GetWeatherDescription();
+            GetPressure();
+            GetWindSpeed();            
+            GetWeatherIcon();
+            GetHumidity();
+            GetVisibility();
+
+            ClearCityNameEntry();
+        }       
+
+        private void GetCityName()
+        {
+            CityTitleName = WeatherDataModel.Title;
         }
+
+        private void GetTemperature()
+        {
+            Temperature = ((int)WeatherDataModel.Main.Temperature).ToString();
+            TemperatureMin = ((int)WeatherDataModel.Main.TempMin).ToString();
+            TemperatureMax = ((int)WeatherDataModel.Main.TempMax).ToString();
+        }
+
+        private void GetSunriseAndSunsetTime()
+        {
+            SunriseTime = WeatherDataModel.Sys.Sunrise.UnixTimeStampToDateTime();
+            SunsetTime = WeatherDataModel.Sys.Sunset.UnixTimeStampToDateTime();
+        }
+
+        private void GetWeatherDescription()
+        {
+            WeatherDescription = WeatherDataModel.Weather[0].Description;
+        }
+
+        private void GetPressure()
+        {
+            Pressure = ((int)WeatherDataModel.Main.Pressure).ToString();
+        }
+
+        private void GetWindSpeed()
+        {
+            WindSpeed = (WeatherDataModel.Wind.Speed * 3.6).ToString("0.##");
+        }
+
+        private void GetWeatherIcon()
+        {
+            string codeIcon = WeatherDataModel.Weather[0].Icon;
+            WeatherIconUrl = $"https://openweathermap.org/img/wn/{codeIcon}@2x.png";
+        }
+
+        private void GetHumidity()
+        {
+            Humidity = WeatherDataModel.Main.Humidity.ToString();
+        }
+
+        private void GetVisibility()
+        {
+            Visibility = (WeatherDataModel.Visibility / 1_000).ToString();
+        }
+
+        private void ClearCityNameEntry() => CityEntryName = "";
     }
 }
 

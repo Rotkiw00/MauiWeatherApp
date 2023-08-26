@@ -16,7 +16,7 @@
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.mauiweatherapp</ApplicationId>
-		<ApplicationIdGuid>d6278e71-4d79-4963-a920-fc7356cf9269</ApplicationIdGuid>
+		<ApplicationIdGuid>a829113d-8d58-4e88-87c5-843447653cd6</ApplicationIdGuid>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -32,9 +32,6 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-	  <WarningLevel>4</WarningLevel>
 	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
@@ -60,30 +57,26 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\background.png" />
+	  <None Remove="Resources\Images\humidity.png" />
+	  <None Remove="Resources\Images\max_temp.png" />
+	  <None Remove="Resources\Images\min_temp.png" />
 	  <None Remove="Resources\Images\pressure.png" />
 	  <None Remove="Resources\Images\sunrise.png" />
 	  <None Remove="Resources\Images\sunset.png" />
+	  <None Remove="Resources\Images\visibility.png" />
 	  <None Remove="Resources\Images\weather.png" />
 	  <None Remove="Resources\Images\wind.png" />
-	  <None Remove="Views\" />
-	  <None Remove="Repositories\" />
-	  <None Remove="Repositories\Services\" />
-	  <None Remove="Repositories\ConfigAPI\" />
-	  <None Remove="Models\" />
-	  <None Remove="ViewModels\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Views\" />
-	  <Folder Include="Repositories\" />
-	  <Folder Include="Repositories\Services\" />
-	  <Folder Include="Repositories\ConfigAPI\" />
-	  <Folder Include="Models\" />
-	  <Folder Include="ViewModels\" />
-	</ItemGroup>
-	<ItemGroup>
+	  <BundleResource Include="Resources\Images\background.png" />
+	  <BundleResource Include="Resources\Images\humidity.png" />
+	  <BundleResource Include="Resources\Images\max_temp.png" />
+	  <BundleResource Include="Resources\Images\min_temp.png" />
 	  <BundleResource Include="Resources\Images\pressure.png" />
 	  <BundleResource Include="Resources\Images\sunrise.png" />
 	  <BundleResource Include="Resources\Images\sunset.png" />
+	  <BundleResource Include="Resources\Images\visibility.png" />
 	  <BundleResource Include="Resources\Images\weather.png" />
 	  <BundleResource Include="Resources\Images\wind.png" />
 	</ItemGroup>
