@@ -39,7 +39,6 @@ packages/
 *.ttf
 *.txt
 *.java
-*.png
 *.svg
 *.items
 *.log
