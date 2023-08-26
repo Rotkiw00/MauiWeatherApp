@@ -19,7 +19,7 @@ As shown in the picture below the weather data is fetched from the API that prov
 
 ## Installation
 
-1. Clone the repository: ```https://github.com/Rotkiw00/MauiWeatherApp.git```
+1. Clone the repository: ```git clone https://github.com/Rotkiw00/MauiWeatherApp.git```
 
 2. Open the project in Visual Studio or your preferred .NET IDE (In the time of developing this app and editing this README I'm using Visual Studio 2022 fo Mac).
 
